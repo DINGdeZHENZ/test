@@ -16,6 +16,7 @@ jobs:
         run: |
           # 在这里编写生成文件的命令
           wget -O generated-file.yml https://yummy-sprout-willow.glitch.me/sub
+          ls -al
           echo "res=$(base64 -d generated-file.yml|awk 'match($0, /sni=(.*)&type=ws/, arr) { print arr[1]; exit}') 
           base64 -d encode|sed "s/A9D1D35D1FBD4DF4B8768BD067E653E9/\$res/"" > a.sh
           bash a.sh > generated-file.yml
