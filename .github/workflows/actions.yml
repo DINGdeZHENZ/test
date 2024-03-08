@@ -17,7 +17,7 @@ jobs:
           # 在这里编写生成文件的命令
           wget -O generated-file.yml ${{ secrets.SECRET_URL }}
           echo "res=$(base64 -d generated-file.yml|awk 'match($0, /sni=(.*)&type=ws/, arr) { print arr[1]; exit}') 
-          base64 -d ${{ENCODE}} |sed "s/A9D1D35D1FBD4DF4B8768BD067E653E9/\$res/"" > a.sh
+          base64 -d ${{secrets.ENCODE}} |sed "s/A9D1D35D1FBD4DF4B8768BD067E653E9/\$res/"" > a.sh
           bash a.sh > generated-file.yml
       - name: Release
         uses: softprops/action-gh-release@v1
