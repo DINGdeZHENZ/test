@@ -12,22 +12,22 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
-      - name: Generate File
-        run: |
-          # 在这里编写生成文件的命令
-          echo "This is a generated file " > generated-file.txt
+      # - name: Generate File
+      #   run: |
+      #     # 在这里编写生成文件的命令
+      #     echo "This is a generated file " > generated-file.txt
 
-      - name: Commit Changes
-        run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git add generated-file.txt
-          git commit -m "Add generated file"
+      # - name: Commit Changes
+      #   run: |
+      #     git config --local user.email "action@github.com"
+      #     git config --local user.name "GitHub Action"
+      #     git add generated-file.txt
+      #     git commit -m "Add generated file"
 
-      - name: Push Changes
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+      # - name: Push Changes
+      #   uses: ad-m/github-push-action@master
+      #   with:
+      #     github_token: ${{ secrets.GITHUB_TOKEN }}
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
