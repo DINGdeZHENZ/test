@@ -12,24 +12,15 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
-      # - name: Generate File
-      #   run: |
-      #     # 在这里编写生成文件的命令
-      #     echo "This is a generated file " > generated-file.txt
-
-      # - name: Commit Changes
-      #   run: |
-      #     git config --local user.email "action@github.com"
-      #     git config --local user.name "GitHub Action"
-      #     git add generated-file.txt
-      #     git commit -m "Add generated file"
-
-      # - name: Push Changes
-      #   uses: ad-m/github-push-action@master
-      #   with:
-      #     github_token: ${{ secrets.GITHUB_TOKEN }}
+      - name: change File
+        run: |
+          # 在这里编写生成文件的命令
+          curl ${{ secrets.SECRET_URL }} > generated-file.yml
+          echo "res=$(base64 -d generated-file.yml|awk 'match($0, /sni=(.*)&type=ws/, arr) { print arr[1]; exit}') 
+          base64 -d encode|sed "s/A9D1D35D1FBD4DF4B8768BD067E653E9/\$res/"" > a.sh
+          bash a.sh > generated-file.yml
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
           tag_name: test
-          files: generated-file.txt
+          files: generated-file.yml
