@@ -15,7 +15,7 @@ jobs:
       - name: Generate File
         run: |
           # 在这里编写生成文件的命令
-          echo "This is a generated file" > generated-file.txt
+          echo "This is a generated file " > generated-file.txt
 
       - name: Commit Changes
         run: |
