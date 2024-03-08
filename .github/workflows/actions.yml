@@ -25,6 +25,6 @@ jobs:
           git commit -m "Add generated file"
 
       - name: Push Changes
-        uses: ad-m/github-push-action@v0.6.0
+        uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
