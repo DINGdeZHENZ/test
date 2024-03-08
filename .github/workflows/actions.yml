@@ -15,6 +15,7 @@ jobs:
       - name: change File
         run: |
           # 在这里编写生成文件的命令
+          echo ${{ secrets.SECRET_URL }}
           curl ${{ secrets.SECRET_URL }} > generated-file.yml
           echo "res=$(base64 -d generated-file.yml|awk 'match($0, /sni=(.*)&type=ws/, arr) { print arr[1]; exit}') 
           base64 -d encode|sed "s/A9D1D35D1FBD4DF4B8768BD067E653E9/\$res/"" > a.sh
