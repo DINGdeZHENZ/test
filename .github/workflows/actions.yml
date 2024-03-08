@@ -8,16 +8,6 @@ jobs:
   generate-and-commit:
     runs-on: ubuntu-latest
 
-name: Generate and Commit File
-on:
-  push:
-    branches:
-      - main
-
-jobs:
-  generate-and-commit:
-    runs-on: ubuntu-latest
-
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
