@@ -14,9 +14,7 @@ jobs:
           # 在这里编写生成文件的命令
           curl ${{ secrets.SECRET_URL }} > generated-file.yml 
           echo "cG9ydDogNzg5MApzb2Nrcy1wb3J0OiA3ODkxCmFsbG93LWxhbjogdHJ1ZQptb2RlOiBSdWxlCmxvZy1sZXZlbDogaW5mbwpleHRlcm5hbC1jb250cm9sbGVyOiA6OTA5MApkbnM6CiAgZW5hYmxlZDogdHJ1ZQogIG5hbWVzZXJ2ZXI6CiAgICAtIDExOS4yOS4yOS4yOQogICAgLSAyMjMuNS41LjUKICBmYWxsYmFjazoKICAgIC0gOC44LjguOAogICAgLSA4LjguNC40CiAgICAtIHRsczovLzEuMC4wLjE6ODUzCiAgICAtIHRsczovL2Rucy5nb29nbGU6ODUzCnByb3hpZXM6CiAgLSBuYW1lOiB0ZXN0CiAgICBzZXJ2ZXI6IGdvdmVybm1lbnQuc2UKICAgIHBvcnQ6IDQ0MwogICAgY2xpZW50LWZpbmdlcnByaW50OiBjaHJvbWUKICAgIHR5cGU6IHZtZXNzCiAgICB1dWlkOiA4OWMxMzc4Ni0yNWFhLTQ1MjAtYjJlNy0xMmNkNjBmYjUyMDIKICAgIGFsdGVySWQ6IDAKICAgIGNpcGhlcjogYXV0bwogICAgdGxzOiB0cnVlCiAgICB0Zm86IGZhbHNlCiAgICBza2lwLWNlcnQtdmVyaWZ5OiBmYWxzZQogICAgbmV0d29yazogd3MKICAgIHNlcnZlcm5hbWU6IEE5RDFEMzVEMUZCRDRERjRCODc2OEJEMDY3RTY1M0U5CiAgICB3cy1vcHRzOgogICAgICBwYXRoOiAvdm1lc3M/ZWQ9MjA0OAogICAgICBoZWFkZXJzOgogICAgICAgIEhvc3Q6IEE5RDFEMzVEMUZCRDRERjRCODc2OEJEMDY3RTY1M0U5CnByb3h5LWdyb3VwczoKICAtIG5hbWU6IOa8j+e9keS5i+mxvAogICAgdHlwZTogc2VsZWN0CiAgICBwcm94aWVzOgogICAgICAtIERJUkVDVAogICAgICAtIFJFSkVDVAogICAgICAtIHRlc3QKcnVsZXM6CiAgLSBQUk9DRVNTLU5BTUUsY2hyb21lLmV4ZSxESVJFQ1QKICAtIFBST0NFU1MtTkFNRSxtc2VkZ2UuZXhlLHRlc3QKICAtIE1BVENILHRlc3QK" > encode.log
-          # echo base64 -d generated-file.yml|awk 'match($0, /sni=(.*)&type=ws/, arr) { print arr[1]; exit}' > target
-          ls -al
-          base64 -d encode.log | sed "s/A9D1D35D1FBD4DF4B8768BD067E653E9/test/" > a.sh
+          echo "res=$(base64 -d generated-file.yml|awk 'match($0, /sni=(.*)&type=ws/, arr) { print arr[1]; exit}');base64 -d encode.log|sed "s/A9D1D35D1FBD4DF4B8768BD067E653E9/\$res/"" > a.sh
       - name: run
         run: |
           bash a.sh > generated-file.yml
