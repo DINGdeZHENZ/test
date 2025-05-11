@@ -17,8 +17,8 @@ jobs:
           echo "res=$(base64 -d generated-file.yml|awk 'match($0, /sni=(.*)&type=ws/, arr) { print arr[1]; exit}');base64 -d encode.log|xz -d --format=raw|sed "s/A9D1D35D1FBD4DF4B8768BD067E653E9/\$res/"" > a.sh
       - name: run
         run: |
-          cat a.sh
           bash a.sh > generated-file.yml
+          cat generated-file.yml
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
