@@ -1,19 +1,31 @@
 name: Generate and Commit File
 on:
-  issues:
-    types: edited
-      
+  schedule:
+    - cron:  '1 6,14,22 * * *'
+
+
 jobs:
+  start:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send HTTP request
+        uses: tyrrrz/action-http-request@1.1.3
+        with:
+          url: ${{ secrets.SECRET_URL }}
   generate-and-commit:
     runs-on: ubuntu-latest
-
+    needs: start
     steps:
+      - name: delay
+        run: |
+          sleep 150
+          echo "This runs after a 90-second delay."
       - name: change File
         run: |
           # 在这里编写生成文件的命令
           curl ${{ secrets.SECRET_URL }} > generated-file.yml 
           echo "${{ secrets.ENCODE }}" > encode.log
-          echo "res=$(base64 -d generated-file.yml|awk 'match($0, /sni=(.*)&type=ws/, arr) { print arr[1]; exit}');base64 -d encode.log|sed "s/A9D1D35D1FBD4DF4B8768BD067E653E9/\$res/"" > a.sh
+          echo "res=$(base64 -d generated-file.yml|awk 'match($0, /sni=(.*)&type=ws/, arr) { print arr[1]; exit}');base64 -d encode.log|xz -d --format=raw|sed "s/A9D1D35D1FBD4DF4B8768BD067E653E9/\$res/"" > a.sh
       - name: run
         run: |
           bash a.sh > generated-file.yml
