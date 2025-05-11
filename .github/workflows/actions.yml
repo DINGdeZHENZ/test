@@ -1,8 +1,5 @@
 name: Generate and Commit File
-on:
-  schedule:
-    - cron:  '1 6,14,22 * * *'
-
+on: workflow_dispatch
 
 jobs:
   start:
@@ -19,7 +16,7 @@ jobs:
       - name: delay
         run: |
           sleep 150
-          echo "This runs after a 90-second delay."
+          echo "This runs after a 150-second delay."
       - name: change File
         run: |
           # 在这里编写生成文件的命令
