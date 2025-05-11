@@ -1,5 +1,7 @@
 name: Generate and Commit File
-on: workflow_dispatch
+on: 
+  schedule:
+    - cron:  '1 6,14,22 * * *'
 
 jobs:
   generate-and-commit:
