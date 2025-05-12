@@ -10,6 +10,7 @@ jobs:
       - name: delay
         run: |
           curl -s -o /dev/null ${{ secrets.SECRET_URL }} 
+          sleep 150
           echo "This runs after a 150-second delay."
       - name: change File
         run: |
