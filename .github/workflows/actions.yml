@@ -10,7 +10,12 @@ jobs:
       - name: delay
         run: |
           TMPFILE=$(mktemp)
-          curl -s -o "TMPFILE" ${{ secrets.SECRET_URL }} --retry 5 --retry-delay 10
+          curl -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36" \
+          -H "Accept: text/html,application/xhtml+xml" \
+          -H "Accept-Language: en-US,en;q=0.9" \
+          -H "Connection: keep-alive" \
+          -H "Upgrade-Insecure-Requests: 1" \
+          -s -o "TMPFILE" ${{ secrets.SECRET_URL }} --retry 5 --retry-delay 10 
           sleep 120
           echo "This runs after a 120-second delay."
           curl -s -o "TMPFILE" ${{ secrets.SECRET_URL }}
