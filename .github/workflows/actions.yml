@@ -7,6 +7,8 @@ jobs:
   generate-and-commit:
     runs-on: ubuntu-latest
     steps:
+      - name: info
+        run: date "+%Y-%m-%d %H:%M:%S"
       - name: delay
         run: |
           TMPFILE=$(mktemp)
