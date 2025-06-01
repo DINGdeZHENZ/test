@@ -1,7 +1,7 @@
 name: Generate and Commit File
 on: 
   schedule:
-    - cron:  '0 22,23,5,8,14,18 * * *'
+    - cron:  '0 22,23,2,5,8,11,14,18 * * *'
 
 jobs:
   generate-and-commit:
