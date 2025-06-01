@@ -1,8 +1,11 @@
 name: Generate and Commit File
-on: workflow_dispatch
+on: 
+  push:
+    branches:
+      - "test-workflow"
 
 jobs:
-  generate-and-commit:
+  generate-and-commit-on-test-workflow:
     runs-on: ubuntu-latest
     steps:
       - name: delay
