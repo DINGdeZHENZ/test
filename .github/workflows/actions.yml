@@ -1,7 +1,5 @@
 name: Generate and Commit File
-on: 
-  schedule:
-    - cron:  '1 */3 * * *'
+on: workflow_dispatch
 
 jobs:
   generate-and-commit:
@@ -9,21 +7,7 @@ jobs:
     steps:
       - name: delay
         run: |
-          curl -s -o /dev/null ${{ secrets.SECRET_URL }} --retry 5 --retry-delay 10
-          sleep 120
-          echo "This runs after a 120-second delay."
-          curl -s -o /dev/null ${{ secrets.SECRET_URL }}
-      - name: change File
-        run: |
-          # 在这里编写生成文件的命令
-          curl ${{ secrets.SECRET_URL }} > generated-file.yml 
-          echo "${{ secrets.ENCODE }}" > encode.log
-          echo "res=$(base64 -d generated-file.yml|awk 'match($0, /sni=(.*)&type=ws/, arr) { print arr[1]; exit}');base64 -d encode.log|xz -d -c --format=raw|sed "s/A9D1D35D1FBD4DF4B8768BD067E653E9/\$res/g"" > a.sh
-      - name: run
-        run: |
-          bash a.sh > generated-file.yml
-      - name: Release
-        uses: softprops/action-gh-release@v1
-        with:
-          tag_name: test
-          files: generated-file.yml
+          TMPFILE=$(mktemp)
+          curl -s -o "$TMPFILE" ${{ secrets.SECRET_URL }} --retry 5 --retry-delay 10
+          rm "$TMPFILE"
+          if [ ! -e "$TMPFILE" ]; then echo "File successfully deleted."; else echo "Failed to delete file!"; fi
