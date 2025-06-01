@@ -9,10 +9,13 @@ jobs:
     steps:
       - name: delay
         run: |
-          curl -s -o /dev/null ${{ secrets.SECRET_URL }} --retry 5 --retry-delay 10
+          TMPFILE=$(mktemp)
+          curl -s -o "TMPFILE" ${{ secrets.SECRET_URL }} --retry 5 --retry-delay 10
           sleep 120
           echo "This runs after a 120-second delay."
-          curl -s -o /dev/null ${{ secrets.SECRET_URL }}
+          curl -s -o "TMPFILE" ${{ secrets.SECRET_URL }}
+          rm "$TMPFILE"
+          if [ ! -e "$TMPFILE" ]; then echo "File successfully deleted."; else echo "Failed to delete file!"; fi
       - name: change File
         run: |
           # 在这里编写生成文件的命令
